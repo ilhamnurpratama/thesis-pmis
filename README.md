@@ -7,3 +7,5 @@ Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 3. 31-07-2022 : MAJOR : Penulisan Bab 2 hingga 10 halaman, formating table caption dan formating gambar caption.
 4. 01-08-2022 : MINOR : Finalisasi Bab 2 untuk bimbingan bab 2
 5. 09-08-2022 : MAJOR : Penambahan Bab 2 untuk pembahasan Enterprise Architecture, Klasifikasi MCDM sampai dengan 20 halaman Bab 2
+6. 10-08-2022 : MINOR : Penambahan 1 halaman Bab 2 terkait dengan VIKOR dan COPRAS
+7. 13-08-2022 : MINOR : Penambahan teori terkait dengan ANP
