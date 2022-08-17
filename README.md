@@ -9,3 +9,4 @@ Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 5. 09-08-2022 : MAJOR : Penambahan Bab 2 untuk pembahasan Enterprise Architecture, Klasifikasi MCDM sampai dengan 20 halaman Bab 2
 6. 10-08-2022 : MINOR : Penambahan 1 halaman Bab 2 terkait dengan VIKOR dan COPRAS
 7. 13-08-2022 : MINOR : Penambahan teori terkait dengan ANP
+8. 17-08-2022 : MAJOR : Penambahan Bab 1 dan juga watermark pada seluruh halaman kecuali halaman judul
