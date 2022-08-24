@@ -1,6 +1,8 @@
 # thesis-pmis
 Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 
+2106663282 - Ilham Nur Pratama
+
 ## Update History
 1. 25-07-2022 : MAJOR : Penambahan format dasar
 2. 26-07-2022 : MAJOR : Penambahan format, page number sampai dengan BAB 2
@@ -10,3 +12,4 @@ Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 6. 10-08-2022 : MINOR : Penambahan 1 halaman Bab 2 terkait dengan VIKOR dan COPRAS
 7. 13-08-2022 : MINOR : Penambahan teori terkait dengan ANP
 8. 17-08-2022 : MAJOR : Penambahan Bab 1 dan juga watermark pada seluruh halaman kecuali halaman judul
+9. 24-08-2022 : MAJOR : Penambahan dasar teori ML dan perubahan latar belakang
