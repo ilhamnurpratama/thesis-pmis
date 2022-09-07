@@ -14,3 +14,4 @@ Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 8. 17-08-2022 : MAJOR : Penambahan Bab 1 dan juga watermark pada seluruh halaman kecuali halaman judul
 9. 24-08-2022 : MAJOR : Penambahan dasar teori ML dan perubahan latar belakang.
 10. 31-08-2022 : MAJOR : Refinement penelitian terdahulu dan penambahan teori terkait dengan machine learning.
+11. 07-09-2022 : MAJOR : BAB 1 Penambahan keterangan pada latar belakang dan revisi latar belakang, BAB 2 penambahan dasar teori terkait dengan ML dan random forest.
