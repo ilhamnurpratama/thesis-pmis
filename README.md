@@ -17,4 +17,5 @@ Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 11. 07-09-2022 : MAJOR : BAB 1 Penambahan keterangan pada latar belakang dan revisi latar belakang, BAB 2 penambahan dasar teori terkait dengan ML dan random forest.
 12. 14-09-2022 : MINOR : Memperbaiki bagian akhir latar belakang, posisi penelitian, dan perbandingan SIMP yang digunakan secara komersil.
 13. 28-09-2022 : MINOR : BAB 2 Penambahan teori terkait dengan business process dan business process modelling notation.
-14. 06-10-2022 : MAJOR : BAB 1 melakukan penambahan metodologi penelitian dan penjelasan metodologi penelitian
+14. 06-10-2022 : MAJOR : BAB 1 melakukan penambahan metodologi penelitian dan penjelasan metodologi penelitian.
+15. 12-10-2022 : MINOR : Bab 1 Penambahan detil permasalahan spesifik ke perusahaan dan drafting slide proposal thesis.
