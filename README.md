@@ -22,3 +22,6 @@ Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 16. 19-10-2022 : MINOR : Bab 1 penambahan data keterlambatan proyek di Finnet dan draft presentasi proposal thesis.
 17. 05-11-2022 : MAJOR : Penambahan proposal dan presentasi proposal tesis, serta pengembangan pada tesis sesuai bimbingan.
 18. 24-11-2022 : MAJOR : Revisi sesuai dengan sidang proposal 1 dan penambahan draft metodologi penelitian.
+19. 01-12-2022 : MINOR : Penambahan dasar teori analisis statistik dan keselarasan dengan ilmu TI
+20. 07-12-2022 : MAJOR : Penambahan isi Bab 3 dan penambahan kuesioner.
+21. 15-12-2022 : MAJOR : Penambahan detil bab 3 dan finalisasi kuesioner, dan pengambilan data.
