@@ -25,3 +25,4 @@ Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 19. 01-12-2022 : MINOR : Penambahan dasar teori analisis statistik dan keselarasan dengan ilmu TI
 20. 07-12-2022 : MAJOR : Penambahan isi Bab 3 dan penambahan kuesioner.
 21. 15-12-2022 : MAJOR : Penambahan detil bab 3 dan finalisasi kuesioner, dan pengambilan data.
+22. 17-01-2023 : MAJOR : Pelengkapan Bab 3, perbaikan data Bab 1, pengumpulan data sistem dan sebagian data kuesioner.
