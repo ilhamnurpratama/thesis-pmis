@@ -26,3 +26,5 @@ Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 20. 07-12-2022 : MAJOR : Penambahan isi Bab 3 dan penambahan kuesioner.
 21. 15-12-2022 : MAJOR : Penambahan detil bab 3 dan finalisasi kuesioner, dan pengambilan data.
 22. 17-01-2023 : MAJOR : Pelengkapan Bab 3, perbaikan data Bab 1, pengumpulan data sistem dan sebagian data kuesioner.
+23. 24-01-2023 : MAJOR : Perancangan EA sistem, perancangan sistem basis data
+24. 15-02-2023 : MAJOR : Finalisasi EA dan sistem basis data.
