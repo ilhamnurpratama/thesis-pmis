@@ -28,3 +28,6 @@ Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 22. 17-01-2023 : MAJOR : Pelengkapan Bab 3, perbaikan data Bab 1, pengumpulan data sistem dan sebagian data kuesioner.
 23. 24-01-2023 : MAJOR : Perancangan EA sistem, perancangan sistem basis data
 24. 15-02-2023 : MAJOR : Finalisasi EA dan sistem basis data.
+25. 22-02-2023 : MINOR : Bab 4 : Pengerjaan DFD untuk informasi keluar masuk SOAPSD, Revisi ERD dan ERD logical
+26. 08-03-2023 : MAJOR : Bab 3: Simulasi proses bisnis eksisting, put data kuesioner dan pembahasan, Bab 4: Analisa peta panas proses as is
+27. 10-03-2023 : MAJOR : BAB 3: Kompilasi data final penelitian, Pembangunan sistem optimasi alokasi pekerjaan
