@@ -1,10 +1,11 @@
 # Sistem Optimasi Alokasi Pekerjaan dan Sumber Daya
 # SOAPSD.py
-# Version 0.2.0
+# Version 0.3.0
 
 # List used
 skillSet = []
 skillResource = []
+taskList = []
 
 # Library Used
 import mysql.connector
@@ -59,6 +60,13 @@ cursor.execute("SELECT pic_id,pic_name,skill_resource FROM sistemoptimasialokasi
 for row in cursor:
     skillResource.append({'pic_id': row[0], 'pic_name': row[1], 'skill_resource': ast.literal_eval(row[2])})
 
+# execute select task list
+cursor.execute("SELECT tid,task_name,pic_id,pic_name FROM sistemoptimasialokasipekerjaan.tasktable")
+
+# Save row to a list task
+for row in cursor:
+    taskList.append({'TID':row[0],'task_name':row[1],'pic_id':row[2],'pic_name':row[3]})
+
 # close the cursor and connection
 cursor.close()
 conn.close()
@@ -85,17 +93,22 @@ for resource in skillResource:
 if len(matchingResources) == 0:
     print('No matching resources found for the given task and skills.')
 else:
-    # Sum the prov of each resource
+    # Sum the prov of each resource and count task occupation
     for resource in matchingResources:
         resource['prov_sum'] = sum(skill['prov'] for skill in resource['skill_resource'])
+        
+        # Count the number of tasks assigned to the resource
+        picDict = {}
+        for task in taskList:
+            if task['pic_id'] == resource['pic_id']:
+                picDict[task['TID']] = task['task_name']
+        
+        resource['task_occupation'] = len(picDict)
     
-    # Sort the matching resources based on difficulty level
-    if difficultyLevel == 'low':
-        matchingResources.sort(key=lambda x: x['prov_sum'])
-    elif difficultyLevel == 'high':
-        matchingResources.sort(key=lambda x: x['prov_sum'], reverse=True)
+    # Sort the matching resources based on difficulty level and task occupation
+    matchingResources.sort(key=lambda x: (x['prov_sum'], x['task_occupation']) if difficultyLevel == 'low' else (-x['prov_sum'], x['task_occupation']))
     
     # Print the results
     print('Matching resources for the given task and skills:')
     for resource in matchingResources:
-        print('Pic ID:', resource['pic_id'],'-','Pic Name:', resource['pic_name'])
+        print('Pic ID:', resource['pic_id'], '- Pic Name:', resource['pic_name'],'- Task Occupation:', resource['task_occupation'])
