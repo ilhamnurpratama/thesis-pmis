@@ -1,11 +1,12 @@
 # Sistem Optimasi Alokasi Pekerjaan dan Sumber Daya
 # SOAPSD.py
-# Version 0.3.0
+# Version 0.4.0
 
 # List used
 skillSet = []
 skillResource = []
 taskList = []
+selectedResource = []
 
 # Library Used
 import mysql.connector
@@ -29,9 +30,12 @@ skillDict = {
     'SETTING FEE': [{'name':'FIRA','prov':3},{'name':'Portal','prov':3}],
     'KONFIGURASI REKON': [{'name':'FIRA','prov':3},{'name':'Portal','prov':3}],
     'SQA': [{'name':'Postman','prov':3}, {'name':'SOAPUI','prov':3}],
-    'UI': [{'name':'Figma','prov':3}],
+    'UI DESIGN': [{'name':'Figma','prov':3},{'name':'UI Design','prov':3}],
     'INTEGRASI': [{'name':'PHP','prov':3}, {'name':'Laravel','prov':4}, {'name':'Golang','prov':3}],
     'DEV DASHBOARD': [{'name':'PHP','prov':4}, {'name':'Laravel','prov':4}, {'name':'HTML','prov':3}, {'name':'CSS','prov':3}, {'name':'Bootstrap','prov':3}],
+    'FRONT END': [{'name':'PHP','prov':4}, {'name':'Laravel','prov':4}, {'name':'HTML','prov':3}, {'name':'CSS','prov':3}, {'name':'Bootstrap','prov':3}],
+    'FRONTEND': [{'name':'PHP','prov':4}, {'name':'Laravel','prov':4}, {'name':'HTML','prov':3}, {'name':'CSS','prov':3}, {'name':'Bootstrap','prov':3}],
+    'FE': [{'name':'PHP','prov':4}, {'name':'Laravel','prov':4}, {'name':'HTML','prov':3}, {'name':'CSS','prov':3}, {'name':'Bootstrap','prov':3}],
     'DEVELOP UI': [{'name':'PHP','prov':3}, {'name':'Laravel','prov':3}, {'name':'HTML','prov':4}, {'name':'PHP','prov':4}, {'name':'Bootstrap','prov':3}],
     'DASHBOARD': [{'name':'Tableau','prov':3}, {'name':'SQL','prov':3}, {'name':'PostgreSQL','prov':3}],
     'API': [{'name':'PHP','prov':4}, {'name':'Golang','prov':2}, {'name':'Java','prov':1}, {'name':'Python','prov':2},{'name':'SQL','prov':3}, {'name':'PostgreSQL','prov':3}],
@@ -72,11 +76,15 @@ cursor.close()
 conn.close()
 
 taskName = input('Input Task Name: ')
-difficultyLevel = input('Input Difficulty Level: ')
+difficultyLevel = input('Input Difficulty Level (low,med,high): ')
+proviciencyLevel = input('Input Proviciency Level (beg,int,exp): ')
 
 # Logic Skill
 for task, skills in skillDict.items():
-    if task in taskName.upper():
+    # Split task name into words
+    task_words = taskName.upper().split()
+    # Check if any of the words match a task in the skillDict
+    if any(word in task_words for word in task.split()):
         skillSet.extend(skills)
 
 skillSet = [dict(t) for t in {tuple(d.items()) for d in skillSet}]
@@ -89,13 +97,48 @@ for resource in skillResource:
             matchingResources.append(resource)
             break
 
+# Skill calculator
+# Create a dictionary to store the prov SUM for each task
+taskProvSum = {}
+
+# Create a dictionary to store the prov AVG for each task
+taskProvAvg = {}
+
+# Split the input task name into words
+taskNameWords = taskName.upper().split()
+
+# Iterate over each task and its associated skills
+for task, skills in skillDict.items():
+    # Initialize the prov sum to zero for this task
+    taskProvSum[task] = 0
+
+    # Check if any of the words in the input task name match a task in the skillDict
+    if any(word in taskNameWords for word in task.split()):
+        for skill in skills:
+            taskProvSum[task] += int(skill['prov'])
+
+# Calculate the prov sum for each matching word in the input task name
+for word in taskNameWords:
+    for task, skills in skillDict.items():
+        if word in task.upper():
+            if task not in taskProvSum:
+                taskProvSum[task] = 0
+            for skill in skills:
+                taskProvSum[task] += int(skill['prov'])
+
+# Calculate the average prov for all tasks that contain a matching word in the input task name
+matchingTasks = list(taskProvSum.keys())
+taskProvAvg = {task: taskProvSum[task] / len(skillDict[task]) for task in matchingTasks}
+
+
 # Perform operations on matching resources
 if len(matchingResources) == 0:
     print('No matching resources found for the given task and skills.')
 else:
-    # Sum the prov of each resource and count task occupation
+    # Add 'prov_avg' key to matching resources
     for resource in matchingResources:
         resource['prov_sum'] = sum(skill['prov'] for skill in resource['skill_resource'])
+        resource['prov_avg'] = resource['prov_sum']/len(resource['skill_resource'])
         
         # Count the number of tasks assigned to the resource
         picDict = {}
@@ -112,3 +155,16 @@ else:
     print('Matching resources for the given task and skills:')
     for resource in matchingResources:
         print('Pic ID:', resource['pic_id'], '- Pic Name:', resource['pic_name'],'- Task Occupation:', resource['task_occupation'])
+    
+    # Random Forest Logic
+    selectedResource = []
+    for resource in matchingResources:
+        if resource['prov_avg'] >= taskProvAvg.get(taskName.upper(), 0) and resource['task_occupation'] < 10: 
+            selectedResource.append(resource)
+
+
+    print('\n','Optimum Resource to be Selected: ')
+    if len(selectedResource) == 0:
+        print('No suitable resources found.')
+    else:
+        print('PIC Id: ',selectedResource[0]['pic_id'],'- Pic Name:', selectedResource[0]['pic_name'])
