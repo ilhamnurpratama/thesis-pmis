@@ -9,6 +9,7 @@ Repository ini digunakan untuk menyimpan versioning dari Sistem Optimasi Alokasi
 2. 2023-03-11: Version 0.2.0: Adding skill proviciency feature, adding skill sortation based on task difficulty Level
 3. 2023-03-11: Version 0.3.0: Adding task lisk and resources availability
 4. 2023-03-12: Version 0.4.0: Adding single rule of random forest for achieving which resources is available
+5. 2023-03-12: Version 0.5.0: Adding 3 input which taskName, difficultyLevel, and proviciency level
 
 ### randomForest.py
 1. 2023-03-11: Version 0.1.0: Initial version, model build

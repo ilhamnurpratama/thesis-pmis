@@ -1,12 +1,15 @@
 # Sistem Optimasi Alokasi Pekerjaan dan Sumber Daya
 # SOAPSD.py
-# Version 0.4.0
+# Version 0.5.0
 
 # List used
 skillSet = []
 skillResource = []
 taskList = []
 selectedResource = []
+difficultyList = []
+proficiencyList = []
+priorityList = []
 
 # Library Used
 import mysql.connector
@@ -62,7 +65,12 @@ cursor.execute("SELECT pic_id,pic_name,skill_resource FROM sistemoptimasialokasi
 
 # Generate skill from table
 for row in cursor:
-    skillResource.append({'pic_id': row[0], 'pic_name': row[1], 'skill_resource': ast.literal_eval(row[2])})
+    skill_resource = ast.literal_eval(row[2])
+    count = 0
+    for skill in skill_resource:
+        if 'name' in skill:
+            count += 1
+    skillResource.append({'pic_id': row[0], 'pic_name': row[1], 'skill_resource': skill_resource, 'total_skills': count})
 
 # execute select task list
 cursor.execute("SELECT tid,task_name,pic_id,pic_name FROM sistemoptimasialokasipekerjaan.tasktable")
@@ -75,9 +83,12 @@ for row in cursor:
 cursor.close()
 conn.close()
 
+# Input Parameter
 taskName = input('Input Task Name: ')
 difficultyLevel = input('Input Difficulty Level (low,med,high): ')
-proviciencyLevel = input('Input Proviciency Level (beg,int,exp): ')
+proficiencyLevel = input('Input Proviciency Level (beg,int,exp): ')
+priorityLevel = input('Input Priority Level (low,nor,high): ')
+
 
 # Logic Skill
 for task, skills in skillDict.items():
@@ -88,6 +99,7 @@ for task, skills in skillDict.items():
         skillSet.extend(skills)
 
 skillSet = [dict(t) for t in {tuple(d.items()) for d in skillSet}]
+#print(skillSet)
 
 # Find matching resources
 matchingResources = []
@@ -96,6 +108,8 @@ for resource in skillResource:
         if any(skill['name'] == s['name'] for s in resource['skill_resource']):
             matchingResources.append(resource)
             break
+
+#print(matchingResources)
 
 # Skill calculator
 # Create a dictionary to store the prov SUM for each task
@@ -107,29 +121,30 @@ taskProvAvg = {}
 # Split the input task name into words
 taskNameWords = taskName.upper().split()
 
+
 # Iterate over each task and its associated skills
 for task, skills in skillDict.items():
     # Initialize the prov sum to zero for this task
     taskProvSum[task] = 0
-
+    
     # Check if any of the words in the input task name match a task in the skillDict
     if any(word in taskNameWords for word in task.split()):
         for skill in skills:
             taskProvSum[task] += int(skill['prov'])
+        matchingTasks = list(taskProvSum.keys())
+        taskProvAvg = {task: taskProvSum[task] / len(skillDict[task]) for task in matchingTasks}
+        taskAverage = taskProvAvg[task]
 
-# Calculate the prov sum for each matching word in the input task name
-for word in taskNameWords:
-    for task, skills in skillDict.items():
-        if word in task.upper():
-            if task not in taskProvSum:
-                taskProvSum[task] = 0
-            for skill in skills:
-                taskProvSum[task] += int(skill['prov'])
-
-# Calculate the average prov for all tasks that contain a matching word in the input task name
-matchingTasks = list(taskProvSum.keys())
-taskProvAvg = {task: taskProvSum[task] / len(skillDict[task]) for task in matchingTasks}
-
+# Count skill initiative
+countSkill = 0
+countedNames = set()
+for word in taskName.split():
+    for key, value in skillDict.items():
+        if word.lower() in key.lower():
+            for skill in value:
+                if skill['name'] not in countedNames:
+                    countSkill += 1
+                    countedNames.add(skill['name'])
 
 # Perform operations on matching resources
 if len(matchingResources) == 0:
@@ -151,20 +166,98 @@ else:
     # Sort the matching resources based on difficulty level and task occupation
     matchingResources.sort(key=lambda x: (x['prov_sum'], x['task_occupation']) if difficultyLevel == 'low' else (-x['prov_sum'], x['task_occupation']))
     
+    
     # Print the results
     print('Matching resources for the given task and skills:')
     for resource in matchingResources:
-        print('Pic ID:', resource['pic_id'], '- Pic Name:', resource['pic_name'],'- Task Occupation:', resource['task_occupation'])
+        print('Pic ID:', resource['pic_id'], '- Pic Name:', resource['pic_name'])#,'- Task Occupation:', resource['task_occupation'])
+        #print('Resource Skill: ', resource['prov_avg'],'- Resource Average Needed: ', taskAverage)
     
+
     # Random Forest Logic
     selectedResource = []
     for resource in matchingResources:
-        if resource['prov_avg'] >= taskProvAvg.get(taskName.upper(), 0) and resource['task_occupation'] < 10: 
-            selectedResource.append(resource)
+        
+        # Logic for difficulty level
+        # High
+        if difficultyLevel == 'high':
+            for resource in matchingResources:
+                if resource['prov_avg'] >= taskAverage:
+                    difficultyList.append(resource)
+        # Medium
+        elif difficultyLevel == 'med':
+            taskProvAvgValue = taskAverage
+            for resource in matchingResources:
+                if abs(resource['prov_avg'] - taskProvAvgValue) <= 0.5:
+                    difficultyList.append(resource)
+                elif resource['prov_avg'] == taskProvAvgValue:
+                    difficultyList.append(resource)
 
+        # Low
+        else:
+            for resource in matchingResources:
+                if resource['prov_avg'] <= taskAverage:
+                    difficultyList.append(resource)
+        
+        # Logic for proficiency level
+        # Experienced
+        if proficiencyLevel == 'exp':
+            for resource in matchingResources:
+                if resource['total_skills'] >= countSkill:
+                    proficiencyList.append(resource)
 
-    print('\n','Optimum Resource to be Selected: ')
-    if len(selectedResource) == 0:
-        print('No suitable resources found.')
+        # Intermediate
+        elif difficultyLevel == 'med':
+            for resource in matchingResources:
+                if resource['total_skills'] >= countSkill-2:
+                    proficiencyList.append(resource)
+
+        # Beginer
+        else:
+            for resource in matchingResources:
+                if resource['total_skills'] <= countSkill:
+                    proficiencyList.append(resource)
+        
+        # Logic for priority level
+        # High
+        if priorityLevel == 'high':
+            for resource in matchingResources:
+                if resource['task_occupation'] < 10:
+                    priorityList.append(resource)
+            
+        # Normal
+        elif priorityLevel == 'nor':
+            if resource['task_occupation'] <= 10:
+                    priorityList.append(resource)
+            
+        # Low
+        else:
+            for resource in matchingResources:
+                    priorityList.append(resource)
+    
+    # Final Param Result
+
+    if len(proficiencyList) > 0:
+        resourceByProficiency = proficiencyList[0]['pic_id']
     else:
-        print('PIC Id: ',selectedResource[0]['pic_id'],'- Pic Name:', selectedResource[0]['pic_name'])
+        resourceByProficiency = proficiencyList
+
+    if len(difficultyList) > 0:
+        resourceByDifficulty = difficultyList[0]['pic_id']
+    else:
+        resourceByDifficulty = difficultyList
+
+    if len(priorityList) > 0:
+        resourceByPriority = priorityList[0]['pic_id']
+    else:
+        resourceByPriority = priorityList
+
+    print(resourceByDifficulty)
+    print(resourceByPriority)
+    print(resourceByProficiency)
+
+
+    if resourceByProficiency == resourceByDifficulty or resourceByProficiency == resourceByPriority or resourceByDifficulty == resourceByPriority:
+        print('Suitable Resource: ',resourceByProficiency)
+    else:
+        print('No suitable resource, please procure for resources')
