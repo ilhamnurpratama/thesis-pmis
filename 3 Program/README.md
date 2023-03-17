@@ -11,6 +11,7 @@ Repository ini digunakan untuk menyimpan versioning dari Sistem Optimasi Alokasi
 4. 2023-03-12: Version 0.4.0: Adding single rule of random forest for achieving which resources is available
 5. 2023-03-12: Version 0.5.0: Adding 3 input which taskName, difficultyLevel, and proviciency level
 6. 2023-03-15: Version 0.5.1: Bug fix on gerating result
+7. 2023-03-17: Version 1.0.0: Adding calculation time & detail result, version to be presented in second seminar
 
 ### randomForest.py
 1. 2023-03-11: Version 0.1.0: Initial version, model build

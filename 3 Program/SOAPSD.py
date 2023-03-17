@@ -1,6 +1,6 @@
 # Sistem Optimasi Alokasi Pekerjaan dan Sumber Daya
 # SOAPSD.py
-# Version 0.5.1
+# Version 1.0.0
 
 # List used
 skillSet = []
@@ -14,6 +14,7 @@ priorityList = []
 # Library Used
 import mysql.connector
 import ast
+import time
 
 # Logic Service
 skillDict = {
@@ -39,6 +40,9 @@ skillDict = {
     'FRONT END': [{'name':'PHP','prov':4}, {'name':'Laravel','prov':4}, {'name':'HTML','prov':3}, {'name':'CSS','prov':3}, {'name':'Bootstrap','prov':3}],
     'FRONTEND': [{'name':'PHP','prov':4}, {'name':'Laravel','prov':4}, {'name':'HTML','prov':3}, {'name':'CSS','prov':3}, {'name':'Bootstrap','prov':3}],
     'FE': [{'name':'PHP','prov':4}, {'name':'Laravel','prov':4}, {'name':'HTML','prov':3}, {'name':'CSS','prov':3}, {'name':'Bootstrap','prov':3}],
+    'BACK END': [{'name':'PHP','prov':3},{'name':'Python','prov':2},{'name':'SQL','prov':3},{'name':'PostgreSQL','prov':3},{'name':'Tibco','prov':3},{'name':'Golang','prov':2},{'name':'TS','prov':3},{'name':'Laravel','prov':3}],
+    'BACKEND': [{'name':'PHP','prov':3},{'name':'Python','prov':2},{'name':'SQL','prov':3},{'name':'PostgreSQL','prov':3},{'name':'Tibco','prov':3},{'name':'Golang','prov':2},{'name':'TS','prov':3},{'name':'Laravel','prov':3}],
+    'BE': [{'name':'PHP','prov':3},{'name':'Python','prov':2},{'name':'SQL','prov':3},{'name':'PostgreSQL','prov':3},{'name':'Tibco','prov':3},{'name':'Golang','prov':2},{'name':'TS','prov':3},{'name':'Laravel','prov':3}],
     'DEVELOP UI': [{'name':'PHP','prov':3}, {'name':'Laravel','prov':3}, {'name':'HTML','prov':4}, {'name':'PHP','prov':4}, {'name':'Bootstrap','prov':3}],
     'DASHBOARD': [{'name':'Tableau','prov':3}, {'name':'SQL','prov':3}, {'name':'PostgreSQL','prov':3}],
     'API': [{'name':'PHP','prov':4}, {'name':'Golang','prov':2}, {'name':'Java','prov':1}, {'name':'Python','prov':2},{'name':'SQL','prov':3}, {'name':'PostgreSQL','prov':3}],
@@ -89,6 +93,8 @@ difficultyLevel = input('Input Difficulty Level (low,med,high): ')
 proficiencyLevel = input('Input Proviciency Level (beg,int,exp): ')
 priorityLevel = input('Input Priority Level (low,nor,high): ')
 
+# Counter Start
+startTime = time.time()
 
 # Logic Skill
 for task, skills in skillDict.items():
@@ -205,7 +211,6 @@ else:
             for resource in matchingResources:
                 if resource['total_skills'] >= countSkill:
                     proficiencyList.append(resource)
-
         # Intermediate
         elif difficultyLevel == 'med':
             for resource in matchingResources:
@@ -239,38 +244,62 @@ else:
 
     if len(proficiencyList) > 0:
         resourceByProficiency = proficiencyList[0]['pic_id']
+        nameByProficiency = proficiencyList[0]['pic_name']
+        taskByProficiency = proficiencyList[0]['task_occupation']
+        skillByProficiency = proficiencyList[0]['skill_resource']
     else:
         resourceByProficiency = proficiencyList
+        nameByProficiency = proficiencyList
+        taskByProficiency = proficiencyList
+        skillByProficiency = proficiencyList
 
     if len(difficultyList) > 0:
         resourceByDifficulty = difficultyList[0]['pic_id']
+        nameByDifficulty = difficultyList[0]['pic_name']
+        taskByDifficulty = difficultyList[0]['task_occupation']
+        skillByDifficulty = difficultyList[0]['skill_resource']
     else:
         resourceByDifficulty = difficultyList
+        nameByDifficulty = difficultyList
+        taskByDifficulty = difficultyList
+        skillByDifficulty = difficultyList
 
     if len(priorityList) > 0:
         resourceByPriority = priorityList[0]['pic_id']
+        nameByPriority = priorityList[0]['pic_name']
+        taskByPriority = priorityList[0]['task_occupation']
+        skillByPriority = priorityList[0]['skill_resource']
     else:
         resourceByPriority = priorityList
+        nameByPriority = priorityList
+        taskByPriority = priorityList
+        skillByPriority = priorityList
 
-    print('Proficiency: ',resourceByProficiency)
-    print('Difficutly: ',resourceByDifficulty)
-    print('Priority: ',resourceByPriority)
+    print('By Proficiency: ',resourceByProficiency,'-',nameByProficiency)
+    print('By Difficutly: ',resourceByDifficulty,'-',nameByDifficulty)
+    print('By Priority: ',resourceByPriority,'-',nameByPriority)
+    print('\n')
 
 
     if resourceByProficiency == resourceByDifficulty:
         if len(proficiencyList) > 0:
-            print('Suitable Resource: ',resourceByProficiency)
+            print('Suitable Resource: ',resourceByProficiency,nameByProficiency,' Task Occupation: ',taskByProficiency,'- Skill: ',skillByProficiency)
         elif len(difficultyList) > 0:
-            print('Suitable Resource: ',resourceByDifficulty)
-    if resourceByProficiency == resourceByPriority:
+            print('Suitable Resource: ',resourceByDifficulty,nameByDifficulty,' Task Occupation: ',taskByDifficulty,'- Skill: ',skillByDifficulty)
+    elif resourceByProficiency == resourceByPriority:
         if len(proficiencyList) > 0:
-            print('Suitable Resource: ',resourceByProficiency)
+            print('Suitable Resource: ',resourceByProficiency,nameByProficiency,' Task Occupation: ',taskByProficiency,'- Skill: ',skillByProficiency)
         elif len(priorityList) > 0:
-            print('Suitable Resource: ',resourceByPriority)
-    if resourceByDifficulty == resourceByPriority:
+            print('Suitable Resource: ',resourceByPriority,nameByPriority,' Task Occupation: ',taskByPriority,'- Skill: ',skillByPriority)
+    elif resourceByDifficulty == resourceByPriority:
         if len(difficultyList) > 0:
-            print('Suitable Resource: ',resourceByDifficulty)
+            print('Suitable Resource: ',resourceByDifficulty,nameByDifficulty,' Task Occupation: ',taskByDifficulty,'- Skill: ',skillByDifficulty)
         elif len(priorityList) > 0:
-            print('Suitable Resource: ',resourceByPriority)
+            print('Suitable Resource: ',resourceByPriority,nameByPriority,' Task Occupation: ',taskByPriority,'- Skill: ',skillByPriority)
     else:
         print('No suitable resource, please procure for resources')
+
+
+endTime = time.time()
+processingTime = endTime - startTime
+print('Processing time: %.3f'%processingTime,' seconds')
