@@ -1,6 +1,6 @@
 # Sistem Optimasi Alokasi Pekerjaan dan Sumber Daya
 # SOAPSD.py
-# Version 0.5.0
+# Version 0.5.1
 
 # List used
 skillSet = []
@@ -252,12 +252,25 @@ else:
     else:
         resourceByPriority = priorityList
 
-    print(resourceByDifficulty)
-    print(resourceByPriority)
-    print(resourceByProficiency)
+    print('Proficiency: ',resourceByProficiency)
+    print('Difficutly: ',resourceByDifficulty)
+    print('Priority: ',resourceByPriority)
 
 
-    if resourceByProficiency == resourceByDifficulty or resourceByProficiency == resourceByPriority or resourceByDifficulty == resourceByPriority:
-        print('Suitable Resource: ',resourceByProficiency)
+    if resourceByProficiency == resourceByDifficulty:
+        if len(proficiencyList) > 0:
+            print('Suitable Resource: ',resourceByProficiency)
+        elif len(difficultyList) > 0:
+            print('Suitable Resource: ',resourceByDifficulty)
+    if resourceByProficiency == resourceByPriority:
+        if len(proficiencyList) > 0:
+            print('Suitable Resource: ',resourceByProficiency)
+        elif len(priorityList) > 0:
+            print('Suitable Resource: ',resourceByPriority)
+    if resourceByDifficulty == resourceByPriority:
+        if len(difficultyList) > 0:
+            print('Suitable Resource: ',resourceByDifficulty)
+        elif len(priorityList) > 0:
+            print('Suitable Resource: ',resourceByPriority)
     else:
         print('No suitable resource, please procure for resources')
