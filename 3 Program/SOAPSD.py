@@ -1,6 +1,6 @@
 # Sistem Optimasi Alokasi Pekerjaan dan Sumber Daya
 # SOAPSD.py
-# Version 1.0.0
+# Version 2.0.0
 
 # List used
 skillSet = []
@@ -89,9 +89,8 @@ conn.close()
 
 # Input Parameter
 taskName = input('Input Task Name: ')
-difficultyLevel = input('Input Difficulty Level (low,med,high): ')
-proficiencyLevel = input('Input Proviciency Level (beg,int,exp): ')
-priorityLevel = input('Input Priority Level (low,nor,high): ')
+difficultyLevel = input('Input Difficulty Level (low,high): ')
+priorityLevel = input('Input Deliverables Number (low,high): ')
 
 # Counter Start
 startTime = time.time()
@@ -205,24 +204,6 @@ else:
                 if resource['prov_avg'] <= taskAverage:
                     difficultyList.append(resource)
         
-        # Logic for proficiency level
-        # Experienced
-        if proficiencyLevel == 'exp':
-            for resource in matchingResources:
-                if resource['total_skills'] >= countSkill:
-                    proficiencyList.append(resource)
-        # Intermediate
-        elif difficultyLevel == 'med':
-            for resource in matchingResources:
-                if resource['total_skills'] >= countSkill-2:
-                    proficiencyList.append(resource)
-
-        # Beginer
-        else:
-            for resource in matchingResources:
-                if resource['total_skills'] <= countSkill:
-                    proficiencyList.append(resource)
-        
         # Logic for priority level
         # High
         if priorityLevel == 'high':
@@ -241,17 +222,6 @@ else:
                     priorityList.append(resource)
     
     # Final Param Result
-
-    if len(proficiencyList) > 0:
-        resourceByProficiency = proficiencyList[0]['pic_id']
-        nameByProficiency = proficiencyList[0]['pic_name']
-        taskByProficiency = proficiencyList[0]['task_occupation']
-        skillByProficiency = proficiencyList[0]['skill_resource']
-    else:
-        resourceByProficiency = proficiencyList
-        nameByProficiency = proficiencyList
-        taskByProficiency = proficiencyList
-        skillByProficiency = proficiencyList
 
     if len(difficultyList) > 0:
         resourceByDifficulty = difficultyList[0]['pic_id']
@@ -275,27 +245,16 @@ else:
         taskByPriority = priorityList
         skillByPriority = priorityList
 
-    print('By Proficiency: ',resourceByProficiency,'-',nameByProficiency)
     print('By Difficutly: ',resourceByDifficulty,'-',nameByDifficulty)
     print('By Priority: ',resourceByPriority,'-',nameByPriority)
     print('\n')
 
 
-    if resourceByProficiency == resourceByDifficulty:
-        if len(proficiencyList) > 0:
-            print('Suitable Resource: ',resourceByProficiency,nameByProficiency,' Task Occupation: ',taskByProficiency,'- Skill: ',skillByProficiency)
+    if resourceByPriority == resourceByDifficulty:
+        if len(priorityList) > 0:
+            print('Suitable Resource: ',resourceByPriority,nameByPriority,' Task Occupation: ',taskByPriority,'- Skill: ',skillByPriority)
         elif len(difficultyList) > 0:
             print('Suitable Resource: ',resourceByDifficulty,nameByDifficulty,' Task Occupation: ',taskByDifficulty,'- Skill: ',skillByDifficulty)
-    elif resourceByProficiency == resourceByPriority:
-        if len(proficiencyList) > 0:
-            print('Suitable Resource: ',resourceByProficiency,nameByProficiency,' Task Occupation: ',taskByProficiency,'- Skill: ',skillByProficiency)
-        elif len(priorityList) > 0:
-            print('Suitable Resource: ',resourceByPriority,nameByPriority,' Task Occupation: ',taskByPriority,'- Skill: ',skillByPriority)
-    elif resourceByDifficulty == resourceByPriority:
-        if len(difficultyList) > 0:
-            print('Suitable Resource: ',resourceByDifficulty,nameByDifficulty,' Task Occupation: ',taskByDifficulty,'- Skill: ',skillByDifficulty)
-        elif len(priorityList) > 0:
-            print('Suitable Resource: ',resourceByPriority,nameByPriority,' Task Occupation: ',taskByPriority,'- Skill: ',skillByPriority)
     else:
         print('No suitable resource, please procure for resources')
 
