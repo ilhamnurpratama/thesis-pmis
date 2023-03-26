@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?><bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:qbp="http://www.qbp-simulator.com/Schema201212" xmlns:qbpapi="http://www.qbp-simulator.com/ApiSchema201212" id="Definitions_0r03109" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.2.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.0.0">
+  <bpmn:collaboration id="Collaboration_00sm3ym">
+    <bpmn:participant id="Participant_1667gi6" name="Business Process To Be" processRef="Process_1i7v8ht"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1i7v8ht" isExecutable="true">
+    <bpmn:userTask id="Activity_1clxpq7" name="Penentuan perkerjaan apa yang akan dikerjakan">
+      <bpmn:incoming>Flow_0adyn75</bpmn:incoming>
+      <bpmn:incoming>Flow_0yz92zp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0po70a3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0958b0r" name="Pembuatan timeline pekerjaan">
+      <bpmn:incoming>Flow_0po70a3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1awo6gb</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1pe8fxw" name="Penetapan sumber daya yang akan mengerjakan pekerjaan">
+      <bpmn:incoming>Flow_120j8ld</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xanksn</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1ytgw3y" name="Memasukan order proyek kedalam sistem">
+      <bpmn:incoming>Flow_0x8ptyx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ng9tys</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0784p2e" name="Memasukan Proyek berdasarkan order dari AM pada SIMP">
+      <bpmn:incoming>Flow_1ng9tys</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yz92zp</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0x8ptyx</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0adyn75" sourceRef="Activity_0x4adns" targetRef="Activity_1clxpq7"/>
+    <bpmn:sequenceFlow id="Flow_0x9f889" sourceRef="Activity_0dsx33p" targetRef="Gateway_0xb1iq0"/>
+    <bpmn:sequenceFlow id="Flow_0x8ptyx" sourceRef="StartEvent_1" targetRef="Activity_1ytgw3y"/>
+    <bpmn:sequenceFlow id="Flow_0po70a3" sourceRef="Activity_1clxpq7" targetRef="Activity_0958b0r"/>
+    <bpmn:sequenceFlow id="Flow_0yz92zp" sourceRef="Activity_0784p2e" targetRef="Activity_1clxpq7"/>
+    <bpmn:sequenceFlow id="Flow_1ng9tys" sourceRef="Activity_1ytgw3y" targetRef="Activity_0784p2e"/>
+    <bpmn:userTask id="Activity_1ojnekc" name="Penentuan sumber daya yang akan mengerjakan pekerjaan">
+      <bpmn:incoming>Flow_1awo6gb</bpmn:incoming>
+      <bpmn:outgoing>Flow_07zl07w</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_07zl07w" sourceRef="Activity_1ojnekc" targetRef="Activity_0qw2x4q"/>
+    <bpmn:serviceTask id="Activity_0qw2x4q" name="Pencarian sumber daya yang tepat sesuai kebutuhan">
+      <bpmn:incoming>Flow_07zl07w</bpmn:incoming>
+      <bpmn:outgoing>Flow_120j8ld</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_120j8ld" sourceRef="Activity_0qw2x4q" targetRef="Activity_1pe8fxw"/>
+    <bpmn:sequenceFlow id="Flow_1awo6gb" sourceRef="Activity_0958b0r" targetRef="Activity_1ojnekc"/>
+    <bpmn:userTask id="Activity_05c9gp4" name="Penutupan Proyek">
+      <bpmn:incoming>Flow_0vygvoo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jabo3z</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1uy52w5" name="Update data proyek">
+      <bpmn:incoming>Flow_0jabo3z</bpmn:incoming>
+      <bpmn:outgoing>Flow_1k2js1b</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_1caas5e">
+      <bpmn:incoming>Flow_1k2js1b</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Activity_0x4adns" name="Memasukan kebutuhan baru akibat change management">
+      <bpmn:incoming>Flow_0gfuocq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0adyn75</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0xb1iq0">
+      <bpmn:incoming>Flow_0x9f889</bpmn:incoming>
+      <bpmn:incoming>Flow_1t6c5co</bpmn:incoming>
+      <bpmn:incoming>Flow_1b3971q</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gfuocq</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0vygvoo</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0vygvoo" sourceRef="Gateway_0xb1iq0" targetRef="Activity_05c9gp4"/>
+    <bpmn:sequenceFlow id="Flow_0jabo3z" sourceRef="Activity_05c9gp4" targetRef="Activity_1uy52w5"/>
+    <bpmn:sequenceFlow id="Flow_1k2js1b" sourceRef="Activity_1uy52w5" targetRef="Event_1caas5e"/>
+    <bpmn:sequenceFlow id="Flow_0gfuocq" sourceRef="Gateway_0xb1iq0" targetRef="Activity_0x4adns"/>
+    <bpmn:userTask id="Activity_0dsx33p" name="Eksekusi proyek oleh officer">
+      <bpmn:incoming>Flow_02meh4z</bpmn:incoming>
+      <bpmn:outgoing>Flow_0x9f889</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1wekx8a">
+      <bpmn:incoming>Flow_1xanksn</bpmn:incoming>
+      <bpmn:outgoing>Flow_02meh4z</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0rurhfs</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1j2e2qx</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1xanksn" sourceRef="Activity_1pe8fxw" targetRef="Gateway_1wekx8a"/>
+    <bpmn:sequenceFlow id="Flow_02meh4z" sourceRef="Gateway_1wekx8a" targetRef="Activity_0dsx33p"/>
+    <bpmn:userTask id="Activity_1qquewd" name="Eksekusi proyek oleh senior officer">
+      <bpmn:incoming>Flow_0rurhfs</bpmn:incoming>
+      <bpmn:outgoing>Flow_1t6c5co</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0rurhfs" sourceRef="Gateway_1wekx8a" targetRef="Activity_1qquewd"/>
+    <bpmn:sequenceFlow id="Flow_1t6c5co" sourceRef="Activity_1qquewd" targetRef="Gateway_0xb1iq0"/>
+    <bpmn:userTask id="Activity_0mnlypd" name="Eksekusi proyek oleh Outsource">
+      <bpmn:incoming>Flow_1j2e2qx</bpmn:incoming>
+      <bpmn:outgoing>Flow_1b3971q</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1j2e2qx" sourceRef="Gateway_1wekx8a" targetRef="Activity_0mnlypd"/>
+    <bpmn:sequenceFlow id="Flow_1b3971q" sourceRef="Activity_0mnlypd" targetRef="Gateway_0xb1iq0"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_00sm3ym">
+      <bpmndi:BPMNShape id="Participant_1667gi6_di" bpmnElement="Participant_1667gi6" isHorizontal="true">
+        <dc:Bounds x="140" y="70" width="1400" height="700"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0adyn75_di" bpmnElement="Flow_0adyn75">
+        <di:waypoint x="729" y="405"/>
+        <di:waypoint x="629" y="405"/>
+        <di:waypoint x="629" y="287"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0x9f889_di" bpmnElement="Flow_0x9f889">
+        <di:waypoint x="1190" y="445"/>
+        <di:waypoint x="1084" y="445"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0x8ptyx_di" bpmnElement="Flow_0x8ptyx">
+        <di:waypoint x="227" y="247"/>
+        <di:waypoint x="269" y="247"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0po70a3_di" bpmnElement="Flow_0po70a3">
+        <di:waypoint x="679" y="247"/>
+        <di:waypoint x="749" y="247"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yz92zp_di" bpmnElement="Flow_0yz92zp">
+        <di:waypoint x="529" y="247"/>
+        <di:waypoint x="579" y="247"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ng9tys_di" bpmnElement="Flow_1ng9tys">
+        <di:waypoint x="369" y="247"/>
+        <di:waypoint x="429" y="247"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07zl07w_di" bpmnElement="Flow_07zl07w">
+        <di:waypoint x="1020" y="247"/>
+        <di:waypoint x="1100" y="247"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_120j8ld_di" bpmnElement="Flow_120j8ld">
+        <di:waypoint x="1200" y="247"/>
+        <di:waypoint x="1299" y="247"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1awo6gb_di" bpmnElement="Flow_1awo6gb">
+        <di:waypoint x="849" y="247"/>
+        <di:waypoint x="920" y="247"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vygvoo_di" bpmnElement="Flow_0vygvoo">
+        <di:waypoint x="1059" y="470"/>
+        <di:waypoint x="1059" y="525"/>
+        <di:waypoint x="949" y="525"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jabo3z_di" bpmnElement="Flow_0jabo3z">
+        <di:waypoint x="849" y="525"/>
+        <di:waypoint x="759" y="525"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1k2js1b_di" bpmnElement="Flow_1k2js1b">
+        <di:waypoint x="659" y="525"/>
+        <di:waypoint x="547" y="525"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gfuocq_di" bpmnElement="Flow_0gfuocq">
+        <di:waypoint x="1059" y="420"/>
+        <di:waypoint x="1059" y="405"/>
+        <di:waypoint x="829" y="405"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xanksn_di" bpmnElement="Flow_1xanksn">
+        <di:waypoint x="1349" y="287"/>
+        <di:waypoint x="1349" y="325"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02meh4z_di" bpmnElement="Flow_02meh4z">
+        <di:waypoint x="1349" y="375"/>
+        <di:waypoint x="1349" y="445"/>
+        <di:waypoint x="1290" y="445"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rurhfs_di" bpmnElement="Flow_0rurhfs">
+        <di:waypoint x="1349" y="375"/>
+        <di:waypoint x="1349" y="560"/>
+        <di:waypoint x="1290" y="560"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1t6c5co_di" bpmnElement="Flow_1t6c5co">
+        <di:waypoint x="1190" y="560"/>
+        <di:waypoint x="1150" y="560"/>
+        <di:waypoint x="1150" y="445"/>
+        <di:waypoint x="1084" y="445"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j2e2qx_di" bpmnElement="Flow_1j2e2qx">
+        <di:waypoint x="1349" y="375"/>
+        <di:waypoint x="1349" y="670"/>
+        <di:waypoint x="1290" y="670"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b3971q_di" bpmnElement="Flow_1b3971q">
+        <di:waypoint x="1190" y="670"/>
+        <di:waypoint x="1150" y="670"/>
+        <di:waypoint x="1150" y="445"/>
+        <di:waypoint x="1084" y="445"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_00ol4dx_di" bpmnElement="Activity_1clxpq7">
+        <dc:Bounds x="579" y="207" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1t3tgq4_di" bpmnElement="Activity_0958b0r">
+        <dc:Bounds x="749" y="207" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0l3rcn9_di" bpmnElement="Activity_1pe8fxw">
+        <dc:Bounds x="1299" y="207" width="100" height="80"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1u3tkgy_di" bpmnElement="Activity_1ytgw3y">
+        <dc:Bounds x="269" y="207" width="100" height="80"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yzsw3r_di" bpmnElement="Activity_0784p2e">
+        <dc:Bounds x="429" y="207" width="100" height="80"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0ui55h8" bpmnElement="StartEvent_1">
+        <dc:Bounds x="191" y="229" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1b6gj74_di" bpmnElement="Activity_1ojnekc">
+        <dc:Bounds x="920" y="207" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0v2fv1r_di" bpmnElement="Activity_0qw2x4q">
+        <dc:Bounds x="1100" y="207" width="100" height="80"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cx62ye_di" bpmnElement="Activity_05c9gp4">
+        <dc:Bounds x="849" y="485" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ov8hrb_di" bpmnElement="Activity_1uy52w5">
+        <dc:Bounds x="659" y="485" width="100" height="80"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1caas5e_di" bpmnElement="Event_1caas5e">
+        <dc:Bounds x="511" y="507" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fuvj7c_di" bpmnElement="Activity_0x4adns">
+        <dc:Bounds x="729" y="365" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1337x4n_di" bpmnElement="Gateway_0xb1iq0" isMarkerVisible="true">
+        <dc:Bounds x="1034" y="420" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lsua6d_di" bpmnElement="Activity_0dsx33p">
+        <dc:Bounds x="1190" y="405" width="100" height="80"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1wekx8a_di" bpmnElement="Gateway_1wekx8a" isMarkerVisible="true">
+        <dc:Bounds x="1324" y="325" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_14hh9aw" bpmnElement="Activity_1qquewd">
+        <dc:Bounds x="1190" y="520" width="100" height="80"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_183qe8o" bpmnElement="Activity_0mnlypd">
+        <dc:Bounds x="1190" y="630" width="100" height="80"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+<qbpapi:Results><qbpapi:Results version="1.4"><qbpapi:process><qbpapi:minCycleTime>4028736.094</qbpapi:minCycleTime><qbpapi:averageCycleTime>13871159.921800002</qbpapi:averageCycleTime><qbpapi:maxCycleTime>34270703.406</qbpapi:maxCycleTime><qbpapi:totalCycleTime>36981503.406</qbpapi:totalCycleTime><qbpapi:minCost>303.8395233416666</qbpapi:minCost><qbpapi:averageCost>779.0511529886111</qbpapi:averageCost><qbpapi:maxCost>1731.2150259777777</qbpapi:maxCost><qbpapi:totalCost>7790.511529886111</qbpapi:totalCost><qbpapi:minDuration>1037136.094</qbpapi:minDuration><qbpapi:averageDuration>3709439.9218</qbpapi:averageDuration><qbpapi:maxDuration>9139103.406000003</qbpapi:maxDuration><qbpapi:processInstances>10</qbpapi:processInstances></qbpapi:process><qbpapi:elements><qbpapi:element id="Process_1i7v8ht.Event_1caas5e" name="EVENT 11 END"><qbpapi:duration><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>10</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.StartEvent_1" name="EVENT 6 START"><qbpapi:duration><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>10</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_0mnlypd" name="Eksekusi proyek oleh Outsource"><qbpapi:duration><qbpapi:min>1139510.1600000001</qbpapi:min><qbpapi:max>4580756.989999998</qbpapi:max><qbpapi:average>2523912.8</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>288.97850193333335</qbpapi:min><qbpapi:max>388.0907714666667</qbpapi:max><qbpapi:average>321.72486464444444</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>3528341.7139999866</qbpapi:max><qbpapi:average>1410249.8069999616</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>3099600</qbpapi:min><qbpapi:max>12452400</qbpapi:max><qbpapi:average>6910200</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>6</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_0dsx33p" name="Eksekusi proyek oleh officer"><qbpapi:duration><qbpapi:min>711526.7790000001</qbpapi:min><qbpapi:max>1178779.5549999997</qbpapi:max><qbpapi:average>895417.1943333333</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>181.14653943055555</qbpapi:min><qbpapi:max>429.62982881111105</qbpapi:max><qbpapi:average>315.2868228891975</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>709623.0499999523</qbpapi:max><qbpapi:average>78847.00555555026</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>1933200</qbpapi:min><qbpapi:max>3153600</qbpapi:max><qbpapi:average>2448000</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>9</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_1qquewd" name="Eksekusi proyek oleh senior officer"><qbpapi:duration><qbpapi:min>425605.257</qbpapi:min><qbpapi:max>2229607.3609999996</qbpapi:max><qbpapi:average>1043802.4861428571</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>245.9052596</qbpapi:min><qbpapi:max>488.3914140444445</qbpapi:max><qbpapi:average>376.60570347936516</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>1468638.8120000362</qbpapi:max><qbpapi:average>391984.92242860794</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>1220400</qbpapi:min><qbpapi:max>5972400</qbpapi:max><qbpapi:average>2789485.714285714</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>7</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Gateway_0xb1iq0" name="GATEWAY 13 XOR"><qbpapi:duration><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>22</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Gateway_1wekx8a" name="GATEWAY 15 XOR"><qbpapi:duration><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>22</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_0784p2e" name="Memasukan Proyek berdasarkan order dari AM pada SIMP"><qbpapi:duration><qbpapi:min>1092.758</qbpapi:min><qbpapi:max>2297.824</qbpapi:max><qbpapi:average>1777.3914</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0.6313712888888889</qbpapi:min><qbpapi:max>1.3276316444444445</qbpapi:max><qbpapi:average>1.0269372533333334</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>10</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_0x4adns" name="Memasukan kebutuhan baru akibat change management"><qbpapi:duration><qbpapi:min>513.223</qbpapi:min><qbpapi:max>3215.075</qbpapi:max><qbpapi:average>1889.3472500000007</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0.2965288444444444</qbpapi:min><qbpapi:max>1.8575988888888888</qbpapi:max><qbpapi:average>1.0916228555555556</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>226800</qbpapi:max><qbpapi:average>27900</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>12</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_1ytgw3y" name="Memasukan order proyek kedalam sistem"><qbpapi:duration><qbpapi:min>160.95700000000215</qbpapi:min><qbpapi:max>11886.436000000002</qbpapi:max><qbpapi:average>3969.0068</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0.09299737777777776</qbpapi:min><qbpapi:max>6.867718577777778</qbpapi:max><qbpapi:average>2.2932039288888886</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>226800</qbpapi:max><qbpapi:average>65880</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>10</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_0958b0r" name="Pembuatan timeline pekerjaan"><qbpapi:duration><qbpapi:min>419.136</qbpapi:min><qbpapi:max>6143.696</qbpapi:max><qbpapi:average>2522.803772727272</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0.2421674666666667</qbpapi:min><qbpapi:max>2.776349911111111</qbpapi:max><qbpapi:average>1.3435132323232324</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>3418.5579998493195</qbpapi:max><qbpapi:average>197.49240908839485</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>226800</qbpapi:max><qbpapi:average>12763.636363636364</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>22</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_0qw2x4q" name="Pencarian sumber daya yang tepat sesuai kebutuhan"><qbpapi:duration><qbpapi:min>0</qbpapi:min><qbpapi:max>1160352.801</qbpapi:max><qbpapi:average>270281.2733636364</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>1160352.8009998798</qbpapi:max><qbpapi:average>270281.2733636119</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>3099600</qbpapi:max><qbpapi:average>731945.4545454546</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>22</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_1clxpq7" name="Penentuan perkerjaan apa yang akan dikerjakan"><qbpapi:duration><qbpapi:min>979.809</qbpapi:min><qbpapi:max>10328.86</qbpapi:max><qbpapi:average>4647.685136363638</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0.7566302833333333</qbpapi:min><qbpapi:max>7.152977066666666</qbpapi:max><qbpapi:average>3.416253650757575</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>4922.710000038147</qbpapi:max><qbpapi:average>223.7595454562794</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>54000</qbpapi:max><qbpapi:average>4909.090909090909</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>22</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_1ojnekc" name="Penentuan sumber daya yang akan mengerjakan pekerjaan"><qbpapi:duration><qbpapi:min>187.548</qbpapi:min><qbpapi:max>17628.342</qbpapi:max><qbpapi:average>8176.560636363635</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0.14482873333333332</qbpapi:min><qbpapi:max>13.612997433333332</qbpapi:max><qbpapi:average>5.9271545297979795</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>6037.378000020981</qbpapi:max><qbpapi:average>501.1087272709066</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>54000</qbpapi:max><qbpapi:average>7363.636363636364</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>22</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_1pe8fxw" name="Penetapan sumber daya yang akan mengerjakan pekerjaan"><qbpapi:duration><qbpapi:min>66.446</qbpapi:min><qbpapi:max>8395.373</qbpapi:max><qbpapi:average>2665.3155</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>0.038391022222222224</qbpapi:min><qbpapi:max>1.110332888888889</qbpapi:max><qbpapi:average>0.5321104585858586</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>6786.073999881744</qbpapi:max><qbpapi:average>1744.3550909432497</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>226800</qbpapi:max><qbpapi:average>20618.18181818182</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>22</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_05c9gp4" name="Penutupan Proyek"><qbpapi:duration><qbpapi:min>2148.515</qbpapi:min><qbpapi:max>11149.371</qbpapi:max><qbpapi:average>7804.864299999999</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>1.241364222222222</qbpapi:min><qbpapi:max>6.4418588</qbpapi:max><qbpapi:average>4.509477151111112</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>226800</qbpapi:max><qbpapi:average>33480</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>10</qbpapi:count></qbpapi:element><qbpapi:element id="Process_1i7v8ht.Activity_1uy52w5" name="Update data proyek"><qbpapi:duration><qbpapi:min>2061.066</qbpapi:min><qbpapi:max>15141.207999999999</qbpapi:max><qbpapi:average>8490.542900000002</qbpapi:average></qbpapi:duration><qbpapi:cost><qbpapi:min>1.1908381333333333</qbpapi:min><qbpapi:max>8.74825351111111</qbpapi:max><qbpapi:average>4.812665288888889</qbpapi:average></qbpapi:cost><qbpapi:waitingTime><qbpapi:min>0</qbpapi:min><qbpapi:max>1609.2990000247955</qbpapi:max><qbpapi:average>160.92990000247954</qbpapi:average></qbpapi:waitingTime><qbpapi:idleTime><qbpapi:min>0</qbpapi:min><qbpapi:max>54000</qbpapi:max><qbpapi:average>16200</qbpapi:average></qbpapi:idleTime><qbpapi:costOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:costOverThreshold><qbpapi:durationOverThreshold><qbpapi:min>0</qbpapi:min><qbpapi:max>0</qbpapi:max><qbpapi:average>0</qbpapi:average></qbpapi:durationOverThreshold><qbpapi:count>10</qbpapi:count></qbpapi:element></qbpapi:elements><qbpapi:resources><qbpapi:resource id="qbp_6e8b21ab-3d8c-dce1-094f-eefd416a6609"><qbpapi:utilization>0.004002344970404774</qbpapi:utilization></qbpapi:resource><qbpapi:resource id="QBP_SERVICE_RESOURCE_ID"><qbpapi:utilization>0.7410861652425221</qbpapi:utilization></qbpapi:resource><qbpapi:resource id="qbp_90b087d1-2cbd-4bef-4429-236cb912fc1f"><qbpapi:utilization>0.6738104069904053</qbpapi:utilization></qbpapi:resource><qbpapi:resource id="QBP_DEFAULT_RESOURCE"><qbpapi:utilization>0.027550368485831454</qbpapi:utilization></qbpapi:resource><qbpapi:resource id="qbp_8e5f27b8-a29c-50d3-ae17-f9336dc4b966"><qbpapi:utilization>0.026842217025362138</qbpapi:utilization></qbpapi:resource><qbpapi:resource id="qbp_6d155244-5cb7-c664-0564-8e01c8b34486"><qbpapi:utilization>0.4601048109636283</qbpapi:utilization></qbpapi:resource><qbpapi:resource id="qbp_c6054db9-ccc0-53fb-3626-7497152495f3"><qbpapi:utilization>0</qbpapi:utilization></qbpapi:resource></qbpapi:resources></qbpapi:Results><qbpapi:CycleTimesData><qbpapi:min>4028736.094</qbpapi:min><qbpapi:max>34270703.406</qbpapi:max><qbpapi:binWidth>3024197</qbpapi:binWidth><qbpapi:values><qbpapi:value>2</qbpapi:value><qbpapi:value>1</qbpapi:value><qbpapi:value>2</qbpapi:value><qbpapi:value>3</qbpapi:value><qbpapi:value>1</qbpapi:value><qbpapi:value>1</qbpapi:value></qbpapi:values></qbpapi:CycleTimesData><qbpapi:CycleTimesInTimetableData><qbpapi:min>1037136.094</qbpapi:min><qbpapi:max>9139103.406000003</qbpapi:max><qbpapi:binWidth>810197</qbpapi:binWidth><qbpapi:values><qbpapi:value>2</qbpapi:value><qbpapi:value>1</qbpapi:value><qbpapi:value>2</qbpapi:value><qbpapi:value>3</qbpapi:value><qbpapi:value>1</qbpapi:value><qbpapi:value>1</qbpapi:value></qbpapi:values></qbpapi:CycleTimesInTimetableData><qbpapi:WaitingTimesData><qbpapi:min>0</qbpapi:min><qbpapi:max>4771392.6319999695</qbpapi:max><qbpapi:binWidth>477140</qbpapi:binWidth><qbpapi:values><qbpapi:value>2</qbpapi:value><qbpapi:value>1</qbpapi:value><qbpapi:value>2</qbpapi:value><qbpapi:value>2</qbpapi:value><qbpapi:value>1</qbpapi:value><qbpapi:value>1</qbpapi:value><qbpapi:value>1</qbpapi:value></qbpapi:values></qbpapi:WaitingTimesData><qbpapi:CostsData><qbpapi:min>303.8395233416666</qbpapi:min><qbpapi:max>1731.2150259777777</qbpapi:max><qbpapi:binWidth>143</qbpapi:binWidth><qbpapi:values><qbpapi:value>4</qbpapi:value><qbpapi:value>2</qbpapi:value><qbpapi:value>1</qbpapi:value><qbpapi:value>1</qbpapi:value><qbpapi:value>1</qbpapi:value><qbpapi:value>1</qbpapi:value></qbpapi:values></qbpapi:CostsData></qbpapi:Results><qbp:processSimulationInfo id="qbp_75b2ca11-fe0d-1778-f385-6e0ddeb4f665" processInstances="10" startDateTime="2023-01-01T01:00:00.000Z" currency="USD"><qbp:arrivalRateDistribution type="FIXED" mean="259200" arg1="NaN" arg2="NaN"><qbp:timeUnit>days</qbp:timeUnit></qbp:arrivalRateDistribution><qbp:timetables><qbp:timetable id="QBP_DEFAULT_TIMETABLE" default="true" name="Default"><qbp:rules><qbp:rule fromTime="08:00:00.000+00:00" toTime="17:00:00.000+00:00" fromWeekDay="MONDAY" toWeekDay="FRIDAY"/></qbp:rules></qbp:timetable><qbp:timetable id="QBP_247_TIMETABLE" default="false" name="24/7"><qbp:rules><qbp:rule fromTime="00:00:00.000+00:00" toTime="23:59:59.999+00:00" fromWeekDay="MONDAY" toWeekDay="SUNDAY"/></qbp:rules></qbp:timetable></qbp:timetables><qbp:resources><qbp:resource id="QBP_DEFAULT_RESOURCE" name="Project Manager" totalAmount="1" costPerHour="4.16" timetableId="QBP_DEFAULT_TIMETABLE"/><qbp:resource id="QBP_SERVICE_RESOURCE_ID" name="Developer/Provisioning/tester" totalAmount="1" costPerHour="2.784" timetableId="QBP_DEFAULT_TIMETABLE"/><qbp:resource id="qbp_6d155244-5cb7-c664-0564-8e01c8b34486" name="Senior Developer/Provisioning/tester" totalAmount="1" costPerHour="4.16" timetableId="QBP_DEFAULT_TIMETABLE"/><qbp:resource id="qbp_8e5f27b8-a29c-50d3-ae17-f9336dc4b966" name="Manager Developer/Provisioning/tester" totalAmount="1" costPerHour="5.55" timetableId="QBP_DEFAULT_TIMETABLE"/><qbp:resource id="qbp_90b087d1-2cbd-4bef-4429-236cb912fc1f" name="Outsource officer" totalAmount="1" costPerHour="2.08" timetableId="QBP_DEFAULT_TIMETABLE"/><qbp:resource id="qbp_6e8b21ab-3d8c-dce1-094f-eefd416a6609" name="Account Manager" totalAmount="1" costPerHour="4.16" timetableId="QBP_DEFAULT_TIMETABLE"/><qbp:resource id="qbp_c6054db9-ccc0-53fb-3626-7497152495f3" name="Sistem Optimasi Alokasi Pekerjaan dan Sumber Daya" totalAmount="1" costPerHour="0" timetableId="QBP_DEFAULT_TIMETABLE"/></qbp:resources><qbp:elements><qbp:element id="qbp_f4d70841-89c0-1dff-6ffd-1617c79750be" elementId="Activity_0mnlypd"><qbp:durationDistribution type="NORMAL" mean="1296000" arg1="172800" arg2="NaN"><qbp:timeUnit>days</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>qbp_90b087d1-2cbd-4bef-4429-236cb912fc1f</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_a9ed0bd1-9757-d6aa-ac6c-0e84e385d657" elementId="Activity_0dsx33p"><qbp:durationDistribution type="NORMAL" mean="864000" arg1="172800" arg2="NaN"><qbp:timeUnit>days</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>QBP_SERVICE_RESOURCE_ID</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_2b1216b5-2d76-5e74-4c2d-a0cd213f349e" elementId="Activity_1qquewd"><qbp:durationDistribution type="NORMAL" mean="691200" arg1="172800" arg2="NaN"><qbp:timeUnit>days</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>qbp_6d155244-5cb7-c664-0564-8e01c8b34486</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_7e60fdc3-df31-d222-950c-c5190dbf903b" elementId="Activity_0784p2e"><qbp:durationDistribution type="NORMAL" mean="1800" arg1="600" arg2="NaN"><qbp:timeUnit>minutes</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>QBP_DEFAULT_RESOURCE</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_75d51749-6192-88f5-363a-51d16045e37b" elementId="Activity_0x4adns"><qbp:durationDistribution type="NORMAL" mean="1800" arg1="600" arg2="NaN"><qbp:timeUnit>minutes</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>QBP_DEFAULT_RESOURCE</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_4a63e8b9-e091-9bc8-5355-144acd07699f" elementId="Activity_1ytgw3y"><qbp:durationDistribution type="NORMAL" mean="3600" arg1="3600" arg2="NaN"><qbp:timeUnit>hours</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>qbp_6e8b21ab-3d8c-dce1-094f-eefd416a6609</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_67a3b2d9-8c2a-80bc-92e0-84c72fea0b72" elementId="Activity_0958b0r"><qbp:durationDistribution type="NORMAL" mean="1800" arg1="1800" arg2="NaN"><qbp:timeUnit>minutes</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>QBP_DEFAULT_RESOURCE</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_7484653c-9fa8-ba9c-2fe8-3cc4d7ee9a49" elementId="Activity_0qw2x4q"><qbp:durationDistribution type="NORMAL" mean="0.007" arg1="0.0008" arg2="NaN"><qbp:timeUnit>seconds</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>qbp_c6054db9-ccc0-53fb-3626-7497152495f3</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_e0c1a4d1-2eba-eef2-35ca-04f803b53f79" elementId="Activity_1clxpq7"><qbp:durationDistribution type="NORMAL" mean="3600" arg1="3600" arg2="NaN"><qbp:timeUnit>hours</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>qbp_8e5f27b8-a29c-50d3-ae17-f9336dc4b966</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_82e290b1-aa15-d1b0-8555-21387cba2f0a" elementId="Activity_1ojnekc"><qbp:durationDistribution type="NORMAL" mean="25.2" arg1="2.88" arg2="NaN"><qbp:timeUnit>hours</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>qbp_c6054db9-ccc0-53fb-3626-7497152495f3</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_81e0eaaa-78dd-3a1d-b524-b6541e00e125" elementId="Activity_1pe8fxw"><qbp:durationDistribution type="NORMAL" mean="600" arg1="600" arg2="NaN"><qbp:timeUnit>minutes</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>QBP_DEFAULT_RESOURCE</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_0b53ce8a-4645-2ba9-ed4d-a39c09ea473d" elementId="Activity_05c9gp4"><qbp:durationDistribution type="NORMAL" mean="7200" arg1="3600" arg2="NaN"><qbp:timeUnit>hours</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>QBP_DEFAULT_RESOURCE</qbp:resourceId></qbp:resourceIds></qbp:element><qbp:element id="qbp_e8ecf847-aaa9-52df-ff9e-f36935bf9eb7" elementId="Activity_1uy52w5"><qbp:durationDistribution type="NORMAL" mean="3600" arg1="7200" arg2="NaN"><qbp:timeUnit>hours</qbp:timeUnit></qbp:durationDistribution><qbp:resourceIds><qbp:resourceId>QBP_DEFAULT_RESOURCE</qbp:resourceId></qbp:resourceIds></qbp:element></qbp:elements><qbp:sequenceFlows><qbp:sequenceFlow elementId="Flow_0gfuocq" executionProbability="0.4"/><qbp:sequenceFlow elementId="Flow_0vygvoo" executionProbability="0.6"/><qbp:sequenceFlow elementId="Flow_02meh4z" executionProbability="0.35"/><qbp:sequenceFlow elementId="Flow_0rurhfs" executionProbability="0.35"/><qbp:sequenceFlow elementId="Flow_1j2e2qx" executionProbability="0.3"/></qbp:sequenceFlows><qbp:statsOptions/></qbp:processSimulationInfo></bpmn:definitions>
