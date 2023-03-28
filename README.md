@@ -32,3 +32,4 @@ Repository ini digunakan untuk menyimpan thesis dan materi thesis ilham
 26. 08-03-2023 : MAJOR : Bab 3: Simulasi proses bisnis eksisting, put data kuesioner dan pembahasan, Bab 4: Analisa peta panas proses as is
 27. 10-03-2023 : MAJOR : BAB 3: Kompilasi data final penelitian, Pembangunan sistem optimasi alokasi pekerjaan version 0.1.0
 28. 27-03-2023 : MAJOR : BAB 3: Penyelesaian Bab 3, BAB 4: Analisis pembangunan sistem, analisis hasil, analisis komparasi hingga uji homogenitas, SISTEM: Penyelesaian sistem
+29. 28-03-2023 : MAJOR : BAB 4: Finalisasi bab 4, BAB 5: Finalisasi Bab 5, Lampiran: memasukan data hasil simulasi as is dan to be, Paper: Penyusunan abstrak, introduction
